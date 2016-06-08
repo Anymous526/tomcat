@@ -1,40 +1,28 @@
 package live.wallet.tomcat.v2;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
 
-public class Response implements ServletResponse {
+public class ResponseFacade implements ServletResponse {
 
-	private OutputStream output;
-	private Request request;
+	private Response response;
 
-	public Response(OutputStream output) {
-		this.output = output;
-	}
-
-	public void setRequest(Request request) {
-		this.request = request;
-	}
-
-	public void sentStaticResources() {
-		// TODO Auto-generated method stub
-
+	public ResponseFacade(Response response) {
+		this.response = response;
 	}
 
 	@Override
 	public String getCharacterEncoding() {
-		// TODO Auto-generated method stub
-		return null;
+		return response.getCharacterEncoding();
 	}
 
 	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
