@@ -12,7 +12,7 @@ import javax.servlet.ServletRequest;
 
 public class RequestFacade implements ServletRequest {
 
-	private ServletRequest request = null;
+	private Request request = null;
 
 	public RequestFacade(Request request) {
 		this.request = request;

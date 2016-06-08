@@ -9,13 +9,18 @@ import live.wallet.tomcat.v3.connector.http.HttpProcessor;
 public class HttpConnector implements Runnable {
 
 	private boolean stopped = false;
-	
-	
+	private String scheme = "http";
+
+	public String getScheme() {
+		return scheme;
+	}
+
 	public void run() {
-		ServerSocket ss = null;
+		ServerSocket serverSocket = null;
 		int port = 8080;
+		String ip = "127.0.0.1";
 		try {
-			ss = new ServerSocket(port, 1, InetAddress.getByName("127.0.0.1"));
+			serverSocket = new ServerSocket(port, 1, InetAddress.getByName(ip));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -24,19 +29,19 @@ public class HttpConnector implements Runnable {
 		while (!stopped) {
 			Socket socket = null;
 			try {
-				socket = ss.accept();
+				socket = serverSocket.accept();				
 			} catch (IOException e) {
-				e.printStackTrace();
 				continue;
 			}
-
+			
 			HttpProcessor processor = new HttpProcessor(this);
 			processor.process(socket);
 		}
 	}
 
 	public void start() {
-		new Thread(this).start();
+		Thread thread = new Thread(this);
+		thread.start();
 	}
 
 	public boolean isStopped() {
