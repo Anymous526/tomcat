@@ -1,8 +1,14 @@
 package live.wallet.tomcat.v2;
 
+import java.io.IOException;
+
 public class StaticResourcesProcessor {
 
 	public void process(Request request, Response response) {
-		response.sentStaticResources();
+		try {
+			response.sentStaticResources();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

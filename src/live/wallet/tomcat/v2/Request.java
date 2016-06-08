@@ -12,6 +12,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 
+@SuppressWarnings("rawtypes")
 public class Request implements ServletRequest {
 
 	private InputStream input;
@@ -22,7 +23,7 @@ public class Request implements ServletRequest {
 	}
 
 	public void parse() {
-		StringBuffer request = new StringBuffer();
+		StringBuffer request = new StringBuffer(1024);
 		byte[] buffer = new byte[1024];
 		int i;
 		try {
@@ -33,11 +34,12 @@ public class Request implements ServletRequest {
 		}
 
 		for (int j = 0; j < i; j++) {
-			request.append(buffer[j]);
+			request.append((char) buffer[j]);
 		}
 
 		System.out.println(request.toString());
 		uri = parseUri(request.toString());
+		System.out.println(uri);
 
 	}
 

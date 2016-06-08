@@ -57,21 +57,7 @@ public class HttpServer1 {
 				socket.close();
 				shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
 			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (socket != null) {
-						socket.close();
-						socket = null;
-					}
-					if (serverSocket != null) {
-						serverSocket.close();
-						serverSocket = null;
-					}
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-
+				continue;
 			}
 
 		}

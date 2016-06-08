@@ -18,7 +18,7 @@ public class HttpServer2 {
 	}
 
 	private void await() {
-		
+
 		ServerSocket serverSocket = null;
 		int port = 8080;
 		String ip = "127.0.0.1";
@@ -34,6 +34,7 @@ public class HttpServer2 {
 			Socket socket = null;
 			InputStream input = null;
 			OutputStream output = null;
+			
 			try {
 				socket = serverSocket.accept();
 				input = socket.getInputStream();
@@ -56,23 +57,8 @@ public class HttpServer2 {
 				socket.close();
 				shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
 			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					if (socket != null) {
-						socket.close();
-						socket = null;
-					}
-					if (serverSocket != null) {
-						serverSocket.close();
-						serverSocket = null;
-					}
-				} catch (IOException e2) {
-					e2.printStackTrace();
-				}
-
+				continue;
 			}
-
 		}
 	}
 }

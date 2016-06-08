@@ -2,7 +2,6 @@ package live.wallet.tomcat.v2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -12,6 +11,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletRequest;
 
+@SuppressWarnings("rawtypes")
 public class RequestFacade implements ServletRequest {
 
 	private Request request;

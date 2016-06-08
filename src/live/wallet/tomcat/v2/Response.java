@@ -1,5 +1,8 @@
 package live.wallet.tomcat.v2;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -21,8 +24,25 @@ public class Response implements ServletResponse {
 		this.request = request;
 	}
 
-	public void sentStaticResources() {
-		// TODO Auto-generated method stub
+	public void sentStaticResources() throws IOException {
+		byte[] buffer = new byte[2048];
+		FileInputStream fis;
+
+		File file = new File(Constants.WEB_ROOT, request.getUri());
+		try {
+			fis = new FileInputStream(file);
+			int ch = fis.read(buffer, 0, 2048);
+			while (ch != -1) {
+				output.write(buffer, 0, ch);
+				ch = fis.read(buffer, 0, 2048);
+			}
+		} catch (FileNotFoundException e) {
+			String errorMessage = "HTTP/1.1 404 File Not Found\r\n" + "Content-Type: text/html\r\n"
+					+ "Content-Length: 23\r\n" + "\r\n" + "<h1>File Not Found</h1>";
+			output.write(errorMessage.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -40,8 +60,7 @@ public class Response implements ServletResponse {
 
 	@Override
 	public PrintWriter getWriter() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		return new PrintWriter(output, true);
 	}
 
 	@Override

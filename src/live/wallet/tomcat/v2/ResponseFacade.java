@@ -22,14 +22,13 @@ public class ResponseFacade implements ServletResponse {
 
 	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
-		
+
 		return null;
 	}
 
 	@Override
 	public PrintWriter getWriter() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		return response.getWriter();
 	}
 
 	@Override
