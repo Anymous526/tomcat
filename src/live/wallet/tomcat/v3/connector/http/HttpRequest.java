@@ -18,8 +18,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
-
 public class HttpRequest implements HttpServletRequest {
 
 	private InputStream input;
@@ -30,11 +28,11 @@ public class HttpRequest implements HttpServletRequest {
 	private String requestedSessionId;
 	private boolean requestedSessionURL;
 	private boolean requestedSessionCookie;
-	protected ArrayList<Cookie> cookies = new ArrayList<Cookie>();
+	private ArrayList<Cookie> cookies = new ArrayList<Cookie>();
 	private String contentType;
 	private int contentLength;
-	protected ServletInputStream stream = null;
-	protected BufferedReader reader = null;
+	protected ServletInputStream stream;
+	protected BufferedReader reader;
 
 	public boolean isRequestedSessionCookie() {
 		return requestedSessionCookie;
@@ -44,7 +42,7 @@ public class HttpRequest implements HttpServletRequest {
 		this.requestedSessionCookie = requestedSessionCookie;
 	}
 
-	protected HashMap headers = new HashMap();
+	protected HashMap<String, ArrayList<String>> headers = new HashMap<String, ArrayList<String>>();
 
 	public void setProtocol(String protocol) {
 		this.protocol = protocol;
@@ -81,9 +79,9 @@ public class HttpRequest implements HttpServletRequest {
 	public void addHeader(String name, String value) {
 		name = name.toLowerCase();
 		synchronized (headers) {
-			ArrayList values = (ArrayList) headers.get(name);
+			ArrayList<String> values = headers.get(name);
 			if (values == null) {
-				values = new ArrayList();
+				values = new ArrayList<String>();
 				headers.put(name, values);
 			}
 			values.add(value);
@@ -195,7 +193,7 @@ public class HttpRequest implements HttpServletRequest {
 	}
 
 	private InputStream createInputStream() {
-		 return (new RequestStream(this));
+		return (new RequestStream(this));
 	}
 
 	@Override
@@ -414,6 +412,38 @@ public class HttpRequest implements HttpServletRequest {
 
 	public void setContentLength(int contentLength) {
 		this.contentLength = contentLength;
+	}
+
+	public InputStream getStream() {
+		return input;
+	}
+
+	public InputStream getInput() {
+		return input;
+	}
+
+	public void setInput(InputStream input) {
+		this.input = input;
+	}
+
+	public HashMap<String, ArrayList<String>> getHeaders() {
+		return headers;
+	}
+
+	public void setHeaders(HashMap<String, ArrayList<String>> headers) {
+		this.headers = headers;
+	}
+
+	public void setCookies(ArrayList<Cookie> cookies) {
+		this.cookies = cookies;
+	}
+
+	public void setStream(ServletInputStream stream) {
+		this.stream = stream;
+	}
+
+	public void setReader(BufferedReader reader) {
+		this.reader = reader;
 	}
 
 }

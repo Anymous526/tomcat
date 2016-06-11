@@ -28,10 +28,10 @@ public class SocketInputStream extends InputStream {
 	 * Position in the buffer.
 	 */
 	protected int pos;
+	
+	private InputStream is;
 
 	protected static StringManager sm = StringManager.getManager(Constants.PACKAGE);
-
-	private InputStream is;
 
 	public SocketInputStream(InputStream is, int bufferSize) {
 		this.is = is;
@@ -53,6 +53,7 @@ public class SocketInputStream extends InputStream {
 				chr = -1;
 			}
 		} while ((chr == CR) || (chr == LF));
+
 		if (chr == -1)
 			throw new EOFException(sm.getString("requestStream.readline.error"));
 		pos--;
@@ -60,7 +61,8 @@ public class SocketInputStream extends InputStream {
 		// Reading the method name
 
 		int maxRead = requestLine.method.length;
-		int readStart = pos;
+		// int readStart = pos;
+		int readStart;
 		int readCount = 0;
 
 		boolean space = false;

@@ -11,14 +11,12 @@ public class HttpConnector implements Runnable {
 	private boolean stopped = false;
 	private String scheme = "http";
 
-	public String getScheme() {
-		return scheme;
-	}
-
 	public void run() {
+		
 		ServerSocket serverSocket = null;
 		int port = 8080;
 		String ip = "127.0.0.1";
+		
 		try {
 			serverSocket = new ServerSocket(port, 1, InetAddress.getByName(ip));
 		} catch (IOException e) {
@@ -29,11 +27,11 @@ public class HttpConnector implements Runnable {
 		while (!stopped) {
 			Socket socket = null;
 			try {
-				socket = serverSocket.accept();				
+				socket = serverSocket.accept();
 			} catch (IOException e) {
 				continue;
 			}
-			
+
 			HttpProcessor processor = new HttpProcessor(this);
 			processor.process(socket);
 		}
@@ -52,4 +50,7 @@ public class HttpConnector implements Runnable {
 		this.stopped = stopped;
 	}
 
+	public String getScheme() {
+		return scheme;
+	}
 }

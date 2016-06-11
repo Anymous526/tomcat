@@ -59,8 +59,7 @@
  *
  * [Additional notices, if required by prior licensing conditions]
  *
- */ 
-
+ */
 
 package org.apache.naming.resources;
 
@@ -76,83 +75,64 @@ import javax.naming.NamingEnumeration;
  * @version $Revision: 1.1 $ $Date: 2001/01/23 03:41:29 $
  */
 
-public class RecyclableNamingEnumeration 
-    implements NamingEnumeration {
+public class RecyclableNamingEnumeration implements NamingEnumeration {
 
+	// ----------------------------------------------------------- Constructors
 
-    // ----------------------------------------------------------- Constructors
+	public RecyclableNamingEnumeration(Vector entries) {
+		this.entries = entries;
+		recycle();
+	}
 
+	// -------------------------------------------------------------- Variables
 
-    public RecyclableNamingEnumeration(Vector entries) {
-        this.entries = entries;
-        recycle();
-    }
+	/**
+	 * Entries.
+	 */
+	protected Vector entries;
 
+	/**
+	 * Underlying enumeration.
+	 */
+	protected Enumeration enums;
 
-    // -------------------------------------------------------------- Variables
+	// --------------------------------------------------------- Public Methods
 
+	/**
+	 * Retrieves the next element in the enumeration.
+	 */
+	public Object next() throws NamingException {
+		return nextElement();
+	}
 
-    /**
-     * Entries.
-     */
-    protected Vector entries;
+	/**
+	 * Determines whether there are any more elements in the enumeration.
+	 */
+	public boolean hasMore() throws NamingException {
+		return enums.hasMoreElements();
+	}
 
+	/**
+	 * Closes this enumeration.
+	 */
+	public void close() throws NamingException {
+	}
 
-    /**
-     * Underlying enumeration.
-     */
-    protected Enumeration enum;
+	public boolean hasMoreElements() {
+		return enums.hasMoreElements();
+	}
 
+	public Object nextElement() {
+		return enums.nextElement();
+	}
 
-    // --------------------------------------------------------- Public Methods
+	// -------------------------------------------------------- Package Methods
 
-
-    /**
-     * Retrieves the next element in the enumeration.
-     */
-    public Object next()
-        throws NamingException {
-        return nextElement();
-    }
-
-
-    /**
-     * Determines whether there are any more elements in the enumeration.
-     */
-    public boolean hasMore()
-        throws NamingException {
-        return enum.hasMoreElements();
-    }
-
-
-    /**
-     * Closes this enumeration.
-     */
-    public void close()
-        throws NamingException {
-    }
-
-
-    public boolean hasMoreElements() {
-        return enum.hasMoreElements();
-    }
-
-
-    public Object nextElement() {
-        return enum.nextElement();
-    }
-
-
-    // -------------------------------------------------------- Package Methods
-
-
-    /**
-     * Recycle.
-     */
-    void recycle() {
-        enum = entries.elements();
-    }
-
+	/**
+	 * Recycle.
+	 */
+	void recycle() {
+		enums = entries.elements();
+	}
 
 }
-

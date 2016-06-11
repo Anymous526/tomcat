@@ -16,7 +16,6 @@ public class PrimitiveServlet implements Servlet {
 
 	@Override
 	public ServletConfig getServletConfig() {
-
 		return null;
 	}
 

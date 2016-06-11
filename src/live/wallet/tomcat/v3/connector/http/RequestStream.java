@@ -5,13 +5,13 @@ import java.io.InputStream;
 
 public class RequestStream extends InputStream {
 
-	public RequestStream(HttpRequest request){
-		
+	public RequestStream(HttpRequest request) {
+
 	}
-	
+
 	@Override
 	public int read() throws IOException {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 

@@ -8,7 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-public class HttpResponseFacade implements HttpServletResponse{
+public class HttpResponseFacade implements HttpServletResponse {
 
 	private HttpResponse response;
 
@@ -18,182 +18,170 @@ public class HttpResponseFacade implements HttpServletResponse{
 
 	@Override
 	public void flushBuffer() throws IOException {
-		// TODO Auto-generated method stub
-		
+		response.flushBuffer();
 	}
 
 	@Override
 	public int getBufferSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return response.getBufferSize();
 	}
 
 	@Override
 	public String getCharacterEncoding() {
-		// TODO Auto-generated method stub
-		return null;
+		return response.getCharacterEncoding();
 	}
 
 	@Override
 	public Locale getLocale() {
-		// TODO Auto-generated method stub
-		return null;
+		return response.getLocale();
 	}
 
 	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		return response.getOutputStream();
 	}
 
 	@Override
 	public PrintWriter getWriter() throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		return response.getWriter();
 	}
 
 	@Override
 	public boolean isCommitted() {
-		// TODO Auto-generated method stub
-		return false;
+
+		return response.isCommitted();
 	}
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
-		
+		response.reset();
+
 	}
 
 	@Override
 	public void resetBuffer() {
-		// TODO Auto-generated method stub
-		
+		response.resetBuffer();
+
 	}
 
 	@Override
-	public void setBufferSize(int arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setContentLength(int len) {
+		response.setContentLength(len);
+
 	}
 
 	@Override
-	public void setContentLength(int arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setContentType(String type) {
+		response.setContentType(type);
+
 	}
 
 	@Override
-	public void setContentType(String arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setBufferSize(int size) {
+		response.setBufferSize(size);
+
 	}
 
 	@Override
-	public void setLocale(Locale arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setLocale(Locale loc) {
+		response.setLocale(loc);
+
 	}
 
 	@Override
-	public void addCookie(Cookie arg0) {
-		// TODO Auto-generated method stub
-		
+	public void addCookie(Cookie cookie) {
+		response.addCookie(cookie);
+
 	}
 
 	@Override
-	public void addDateHeader(String arg0, long arg1) {
-		// TODO Auto-generated method stub
-		
+	public boolean containsHeader(String name) {
+		return response.containsHeader(name);
 	}
 
 	@Override
-	public void addHeader(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
+	public String encodeURL(String url) {
+		return response.encodeURL(url);
 	}
 
 	@Override
-	public void addIntHeader(String arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
+	public String encodeRedirectURL(String url) {
+		return response.encodeRedirectURL(url);
 	}
 
 	@Override
-	public boolean containsHeader(String arg0) {
-		// TODO Auto-generated method stub
-		return false;
+	public String encodeUrl(String url) {
+
+		return response.encodeUrl(url);
 	}
 
 	@Override
-	public String encodeRedirectURL(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public String encodeRedirectUrl(String url) {
+		return response.encodeRedirectURL(url);
 	}
 
 	@Override
-	public String encodeRedirectUrl(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public void sendError(int sc, String msg) throws IOException {
+		response.sendError(sc, msg);
+
 	}
 
 	@Override
-	public String encodeURL(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public void sendError(int sc) throws IOException {
+		response.sendError(sc);
+
 	}
 
 	@Override
-	public String encodeUrl(String arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public void sendRedirect(String location) throws IOException {
+		response.sendRedirect(location);
+
 	}
 
 	@Override
-	public void sendError(int arg0) throws IOException {
-		// TODO Auto-generated method stub
-		
+	public void setDateHeader(String name, long date) {
+		response.setDateHeader(name, date);
+
 	}
 
 	@Override
-	public void sendError(int arg0, String arg1) throws IOException {
-		// TODO Auto-generated method stub
-		
+	public void addDateHeader(String name, long date) {
+		response.addDateHeader(name, date);
 	}
 
 	@Override
-	public void sendRedirect(String arg0) throws IOException {
-		// TODO Auto-generated method stub
-		
+	public void setHeader(String name, String value) {
+		response.setHeader(name, value);
+
 	}
 
 	@Override
-	public void setDateHeader(String arg0, long arg1) {
-		// TODO Auto-generated method stub
-		
+	public void addHeader(String name, String value) {
+		response.addHeader(name, value);
+
 	}
 
 	@Override
-	public void setHeader(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
+	public void setIntHeader(String name, int value) {
+		response.setIntHeader(name, value);
+
 	}
 
 	@Override
-	public void setIntHeader(String arg0, int arg1) {
-		// TODO Auto-generated method stub
-		
+	public void addIntHeader(String name, int value) {
+		response.addIntHeader(name, value);
 	}
 
 	@Override
-	public void setStatus(int arg0) {
-		// TODO Auto-generated method stub
-		
+	public void setStatus(int sc) {
+		response.setStatus(sc);
+
 	}
 
 	@Override
-	public void setStatus(int arg0, String arg1) {
-		// TODO Auto-generated method stub
-		
+	public void setStatus(int sc, String sm) {
+		response.setStatus(sc, sm);
+
 	}
 
 }

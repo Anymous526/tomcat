@@ -7,20 +7,18 @@ public class HttpHeader {
 	public static final int MAX_NAME_SIZE = 128;
 	public static final int MAX_VALUE_SIZE = 4096;
 
-	public char[] name;
-	public int nameEnd;
-	public char[] value;
-	public int valueEnd;
-	protected int hashCode = 0;
+	private char[] name;
+	private int nameEnd;
+	private char[] value;
+	private int valueEnd;
+	private int hashCode;
 
 	public HttpHeader() {
-
 		this(new char[INITIAL_NAME_SIZE], 0, new char[INITIAL_VALUE_SIZE], 0);
 
 	}
 
 	public HttpHeader(char[] name, int nameEnd, char[] value, int valueEnd) {
-
 		this.name = name;
 		this.nameEnd = nameEnd;
 		this.value = value;
@@ -29,7 +27,6 @@ public class HttpHeader {
 	}
 
 	public HttpHeader(String name, String value) {
-
 		this.name = name.toLowerCase().toCharArray();
 		this.nameEnd = name.length();
 		this.value = value.toCharArray();
@@ -62,8 +59,10 @@ public class HttpHeader {
 	 * characters must already be lower case.
 	 */
 	public boolean equals(char[] buf, int end) {
-		if (end != nameEnd)
+		if (end != nameEnd) {
 			return false;
+		}
+
 		for (int i = 0; i < end; i++) {
 			if (buf[i] != name[i])
 				return false;
@@ -90,8 +89,10 @@ public class HttpHeader {
 	 * Test if the value of the header is equal to the given char array.
 	 */
 	public boolean valueEquals(char[] buf, int end) {
-		if (end != valueEnd)
+		if (end != valueEnd) {
 			return false;
+		}
+		
 		for (int i = 0; i < end; i++) {
 			if (buf[i] != value[i])
 				return false;
@@ -196,5 +197,45 @@ public class HttpHeader {
 			return equals((HttpHeader) obj);
 		}
 		return false;
+	}
+
+	public char[] getName() {
+		return name;
+	}
+
+	public void setName(char[] name) {
+		this.name = name;
+	}
+
+	public int getNameEnd() {
+		return nameEnd;
+	}
+
+	public void setNameEnd(int nameEnd) {
+		this.nameEnd = nameEnd;
+	}
+
+	public char[] getValue() {
+		return value;
+	}
+
+	public void setValue(char[] value) {
+		this.value = value;
+	}
+
+	public int getValueEnd() {
+		return valueEnd;
+	}
+
+	public void setValueEnd(int valueEnd) {
+		this.valueEnd = valueEnd;
+	}
+
+	public int getHashCode() {
+		return hashCode;
+	}
+
+	public void setHashCode(int hashCode) {
+		this.hashCode = hashCode;
 	}
 }

@@ -13,6 +13,7 @@ import org.apache.catalina.util.StringManager;
 import live.wallet.tomcat.v3.ServletProcessor;
 import live.wallet.tomcat.v3.StaticResourceProcessor;
 
+@SuppressWarnings("unused")
 public class HttpProcessor {
 
 	private HttpConnector connector;
@@ -30,7 +31,7 @@ public class HttpProcessor {
 	public void process(Socket socket) {
 
 		try {
-			SocketInputStream input = new SocketInputStream(socket.getInputStream(),2048);
+			SocketInputStream input = new SocketInputStream(socket.getInputStream(), 2048);
 			OutputStream output = socket.getOutputStream();
 			request = new HttpRequest(input);
 			response = new HttpResponse(output);
@@ -64,16 +65,16 @@ public class HttpProcessor {
 
 			// Read the next header
 			input.readHeader(header);
-			if (header.nameEnd == 0) {
-				if (header.valueEnd == 0) {
+			if (header.getNameEnd() == 0) {
+				if (header.getValueEnd() == 0) {
 					return;
 				} else {
 					throw new ServletException(sm.getString("httpProcessor.parseHeaders.colon"));
 				}
 			}
 
-			String name = new String(header.name, 0, header.nameEnd);
-			String value = new String(header.value, 0, header.valueEnd);
+			String name = new String(header.getName(), 0, header.getNameEnd());
+			String value = new String(header.getValue(), 0, header.getValueEnd());
 			request.addHeader(name, value);
 			// do something for some headers, ignore others.
 			if (name.equals("cookie")) {
@@ -106,7 +107,7 @@ public class HttpProcessor {
 	}
 
 	private void parseRequest(SocketInputStream input, OutputStream output) throws ServletException, IOException {
-		
+
 		input.readRequestLine(requestLine);
 		String method = new String(requestLine.method, 0, requestLine.methodEnd);
 		String uri = null;

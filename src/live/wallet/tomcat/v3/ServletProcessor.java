@@ -34,6 +34,7 @@ public class ServletProcessor {
 			HttpRequestFacade requestFacade = new HttpRequestFacade(request);
 			HttpResponseFacade responseFacade = new HttpResponseFacade(response);
 			servlet.service(requestFacade, responseFacade);
+			response.finishResponse();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -45,8 +46,6 @@ public class ServletProcessor {
 			e.printStackTrace();
 		} catch (ServletException e) {
 			e.printStackTrace();
-		} finally {
-			response.finishResponse();
 		}
 
 	}

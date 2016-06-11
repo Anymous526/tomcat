@@ -24,43 +24,36 @@ public class HttpRequestFacade implements HttpServletRequest {
 
 	@Override
 	public Object getAttribute(String name) {
-
 		return request.getAttribute(name);
 	}
 
 	@Override
-	public Enumeration getAttributeNames() {
-
+	public Enumeration<?> getAttributeNames() {
 		return request.getAttributeNames();
 	}
 
 	@Override
 	public String getCharacterEncoding() {
-
 		return request.getCharacterEncoding();
 	}
 
 	@Override
 	public void setCharacterEncoding(String env) throws UnsupportedEncodingException {
 		request.setCharacterEncoding(env);
-
 	}
 
 	@Override
 	public int getContentLength() {
-
 		return request.getContentLength();
 	}
 
 	@Override
 	public String getContentType() {
-
 		return request.getContentType();
 	}
 
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
-
 		return request.getInputStream();
 	}
 
@@ -71,116 +64,97 @@ public class HttpRequestFacade implements HttpServletRequest {
 	}
 
 	@Override
-	public Enumeration getParameterNames() {
-
+	public Enumeration<?> getParameterNames() {
 		return request.getParameterNames();
 	}
 
 	@Override
 	public String[] getParameterValues(String name) {
-
 		return request.getParameterValues(name);
 	}
 
 	@Override
-	public Map getParameterMap() {
-
+	public Map<?, ?> getParameterMap() {
 		return request.getParameterMap();
 	}
 
 	@Override
 	public String getProtocol() {
-
 		return request.getProtocol();
 	}
 
 	@Override
 	public String getScheme() {
-
 		return request.getScheme();
 	}
 
 	@Override
 	public String getServerName() {
-
 		return request.getServerName();
 	}
 
 	@Override
 	public int getServerPort() {
-
 		return request.getServerPort();
 	}
 
 	@Override
 	public BufferedReader getReader() throws IOException {
-
 		return request.getReader();
 	}
 
 	@Override
 	public String getRemoteAddr() {
-
 		return request.getRemoteAddr();
 	}
 
 	@Override
 	public String getRemoteHost() {
-
 		return request.getRemoteHost();
 	}
 
 	@Override
 	public void setAttribute(String name, Object o) {
 		request.setAttribute(name, o);
-
 	}
 
 	@Override
 	public void removeAttribute(String name) {
 		request.removeAttribute(name);
-
 	}
 
 	@Override
 	public Locale getLocale() {
-
 		return request.getLocale();
 	}
 
 	@Override
-	public Enumeration getLocales() {
-
+	public Enumeration<?> getLocales() {
 		return request.getLocales();
 	}
 
 	@Override
 	public boolean isSecure() {
-
 		return request.isSecure();
 	}
 
 	@Override
 	public RequestDispatcher getRequestDispatcher(String path) {
-
 		return request.getRequestDispatcher(path);
 	}
 
 	@Override
 	public String getRealPath(String path) {
-
 		return request.getRealPath(path);
 	}
 
 	@Override
 	public String getAuthType() {
-
 		return request.getAuthType();
 	}
 
 	@Override
 	public Cookie[] getCookies() {
-
 		return request.getCookies();
 	}
 
@@ -196,12 +170,12 @@ public class HttpRequestFacade implements HttpServletRequest {
 	}
 
 	@Override
-	public Enumeration getHeaders(String name) {
+	public Enumeration<?> getHeaders(String name) {
 		return request.getHeaders(name);
 	}
 
 	@Override
-	public Enumeration getHeaderNames() {
+	public Enumeration<?> getHeaderNames() {
 		return request.getHeaderNames();
 	}
 
@@ -217,19 +191,16 @@ public class HttpRequestFacade implements HttpServletRequest {
 
 	@Override
 	public String getPathInfo() {
-
 		return request.getPathInfo();
 	}
 
 	@Override
 	public String getPathTranslated() {
-
 		return request.getPathTranslated();
 	}
 
 	@Override
 	public String getContextPath() {
-
 		return request.getContentType();
 	}
 
@@ -240,25 +211,21 @@ public class HttpRequestFacade implements HttpServletRequest {
 
 	@Override
 	public String getRemoteUser() {
-
 		return request.getRemoteUser();
 	}
 
 	@Override
 	public boolean isUserInRole(String role) {
-
 		return request.isUserInRole(role);
 	}
 
 	@Override
 	public Principal getUserPrincipal() {
-
 		return request.getUserPrincipal();
 	}
 
 	@Override
 	public String getRequestedSessionId() {
-
 		return request.getRequestedSessionId();
 	}
 
@@ -269,13 +236,11 @@ public class HttpRequestFacade implements HttpServletRequest {
 
 	@Override
 	public StringBuffer getRequestURL() {
-
 		return request.getRequestURL();
 	}
 
 	@Override
 	public String getServletPath() {
-
 		return request.getServletPath();
 	}
 
