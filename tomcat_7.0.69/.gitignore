@@ -21,7 +21,7 @@ output
 # test/webapp-3.0-virtual-webapp use it:
 # target
 work
-build.properties
+#build.properties
 mvn.properties
 .checkstyle
 .classpath
