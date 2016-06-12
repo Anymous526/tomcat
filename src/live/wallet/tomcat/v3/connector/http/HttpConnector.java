@@ -12,11 +12,11 @@ public class HttpConnector implements Runnable {
 	private String scheme = "http";
 
 	public void run() {
-		
+
 		ServerSocket serverSocket = null;
 		int port = 8080;
 		String ip = "127.0.0.1";
-		
+
 		try {
 			serverSocket = new ServerSocket(port, 1, InetAddress.getByName(ip));
 		} catch (IOException e) {
@@ -25,6 +25,7 @@ public class HttpConnector implements Runnable {
 		}
 
 		while (!stopped) {
+			// Accept the next incoming connection from the server socket
 			Socket socket = null;
 			try {
 				socket = serverSocket.accept();
@@ -40,14 +41,6 @@ public class HttpConnector implements Runnable {
 	public void start() {
 		Thread thread = new Thread(this);
 		thread.start();
-	}
-
-	public boolean isStopped() {
-		return stopped;
-	}
-
-	public void setStopped(boolean stopped) {
-		this.stopped = stopped;
 	}
 
 	public String getScheme() {

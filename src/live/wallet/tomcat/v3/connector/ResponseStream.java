@@ -37,7 +37,7 @@ public class ResponseStream extends ServletOutputStream {
 	/**
 	 * The underlying output stream to which we should write data.
 	 */
-	protected OutputStream stream;
+	private OutputStream stream;
 
 	public ResponseStream(HttpResponse response) {
 		super();
@@ -45,6 +45,35 @@ public class ResponseStream extends ServletOutputStream {
 		commit = false;
 		count = 0;
 		this.response = response;
+	}
+
+	/**
+	 * Close this output stream, causing any buffered data to be flushed and any
+	 * further output data to throw an IOException.
+	 */
+	public void close() throws IOException {
+		if (closed) {
+			throw new IOException("responseStream.close.closed");
+		}
+
+		response.flushBuffer();
+		closed = true;
+	}
+
+	/**
+	 * Flush any buffered data for this output stream, which also causes the
+	 * response to be committed.
+	 */
+	public void flush() throws IOException {
+
+		if (closed) {
+			throw new IOException("responseStream.flush.closed");
+		}
+
+		if (commit) {
+			response.flushBuffer();
+		}
+
 	}
 
 	/**
@@ -81,8 +110,9 @@ public class ResponseStream extends ServletOutputStream {
 			throw new IOException("responseStream.write.closed");
 		}
 		int actual = len;
-		if ((length > 0) && ((count + len) >= length))
+		if ((length > 0) && ((count + len) >= length)) {
 			actual = length - count;
+		}
 		response.write(b, off, actual);
 		count += actual;
 		if (actual < len) {
@@ -91,39 +121,11 @@ public class ResponseStream extends ServletOutputStream {
 	}
 
 	/**
-	 * Close this output stream, causing any buffered data to be flushed and any
-	 * further output data to throw an IOException.
+	 * Has this response stream been closed?
 	 */
-	public void close() throws IOException {
-		if (closed) {
-			throw new IOException("responseStream.close.closed");
-		}
+	boolean closed() {
+		return (this.closed);
 
-		response.flushBuffer();
-		closed = true;
-	}
-
-	/**
-	 * Flush any buffered data for this output stream, which also causes the
-	 * response to be committed.
-	 */
-	public void flush() throws IOException {
-
-		if (closed) {
-			throw new IOException("responseStream.flush.closed");
-		}
-
-		if (commit) {
-			response.flushBuffer();
-		}
-
-	}
-
-	/**
-	 * Reset the count of bytes written to this stream to zero.
-	 */
-	public void reset() {
-		count = 0;
 	}
 
 	/**
@@ -138,14 +140,34 @@ public class ResponseStream extends ServletOutputStream {
 	}
 
 	/**
+	 * Reset the count of bytes written to this stream to zero.
+	 */
+	public void reset() {
+		count = 0;
+	}
+
+	/**
+	 * [Package Private] Return the "commit response on flush" flag.
+	 */
+	public boolean getCommit() {
+		return commit;
+	}
+
+	/**
 	 * [Package Private] Return the "commit response on flush" flag.
 	 */
 	public boolean isCommit() {
 		return commit;
 	}
 
-	public void setCommit(boolean b) {
-		this.commit = b;
+	/**
+	 * [Package Private] Set the "commit response on flush" flag.
+	 *
+	 * @param commit
+	 *            The new commit flag
+	 */
+	public void setCommit(boolean commit) {
+		this.commit = commit;
 	}
 
 }

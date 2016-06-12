@@ -10,17 +10,20 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.util.CookieTools;
-import org.apache.tomcat.util.http.Cookies;
 
+import ex03.pyrmont.connector.http.Constants;
 import live.wallet.tomcat.v3.connector.ResponseStream;
 import live.wallet.tomcat.v3.connector.ResponseWriter;
 
@@ -28,8 +31,8 @@ public class HttpResponse implements HttpServletResponse {
 
 	private static final int BUFFER_SIZE = 1024;
 
-	private OutputStream output;
 	private HttpRequest request;
+	private OutputStream output;
 	private PrintWriter writer;
 	private byte[] buffer;
 	private int bufferCount;
@@ -58,14 +61,14 @@ public class HttpResponse implements HttpServletResponse {
 	/**
 	 * The set of Cookies associated with this Response.
 	 */
-	protected ArrayList<Cookie> cookies = new ArrayList<Cookie>();
+	protected List<Cookie> cookies;
 	/**
 	 * The HTTP headers explicitly added via addHeader(), but not including
 	 * those to be added with setContentLength(), setContentType(), and so on.
 	 * This collection is keyed by the header name, and the elements are
 	 * ArrayLists containing the associated values that have been set.
 	 */
-	protected HashMap<String, ArrayList<String>> headers = new HashMap<String, ArrayList<String>>();
+	protected Map<String, List<String>> headers;
 	/**
 	 * The date format we will use for creating date headers.
 	 */
@@ -81,104 +84,36 @@ public class HttpResponse implements HttpServletResponse {
 
 	public HttpResponse(OutputStream output) {
 		this.output = output;
-	}
-
-	public void sendHeads() {
-
-		if (isCommitted())
-			return;
-		// Prepare a suitable output writer
-		OutputStreamWriter osr = null;
-		try {
-			osr = new OutputStreamWriter(getStream(), getCharacterEncoding());
-		} catch (UnsupportedEncodingException e) {
-			osr = new OutputStreamWriter(getStream());
-		}
-		final PrintWriter outputWriter = new PrintWriter(osr);
-		// Send the "Status:" header
-		outputWriter.print(this.getProtocol());
-		outputWriter.print(" ");
-		outputWriter.print(status);
-		if (message != null) {
-			outputWriter.print(" ");
-			outputWriter.print(message);
-		}
-		outputWriter.print("\r\n");
-		// Send the content-length and content-type headers (if any)
-		if (getContentType() != null) {
-			outputWriter.print("Content-Type: " + getContentType() + "\r\n");
-		}
-		if (getContentLength() >= 0) {
-			outputWriter.print("Content-Length: " + getContentLength() + "\r\n");
-		}
-		// Send all specified headers (if any)
-		synchronized (headers) {
-			Iterator<String> names = headers.keySet().iterator();
-			while (names.hasNext()) {
-				String name = (String) names.next();
-				ArrayList<String> values = headers.get(name);
-				Iterator<String> items = values.iterator();
-				while (items.hasNext()) {
-					String value = (String) items.next();
-					outputWriter.print(name);
-					outputWriter.print(": ");
-					outputWriter.print(value);
-					outputWriter.print("\r\n");
-				}
-			}
-		}
-		// Add the session ID cookie if necessary
-		/*
-		 * HttpServletRequest hreq = (HttpServletRequest) request.getRequest();
-		 * HttpSession session = hreq.getSession(false); if ((session != null)
-		 * && session.isNew() && (getContext() != null) &&
-		 * getContext().getCookies()) { Cookie cookie = new Cookie("JSESSIONID",
-		 * session.getId()); cookie.setMaxAge(-1); String contextPath = null; if
-		 * (context != null) contextPath = context.getPath(); if ((contextPath
-		 * != null) && (contextPath.length() > 0)) cookie.setPath(contextPath);
-		 * else
-		 * 
-		 * cookie.setPath("/"); if (hreq.isSecure()) cookie.setSecure(true);
-		 * addCookie(cookie); }
-		 */
-		// Send all specified cookies (if any)
-		synchronized (cookies) {
-			Iterator<Cookie> items = cookies.iterator();
-			while (items.hasNext()) {
-				Cookie cookie = items.next();
-				outputWriter.print(CookieTools.getCookieHeaderName(cookie));
-				outputWriter.print(": ");
-				outputWriter.print(CookieTools.getCookieHeaderValue(cookie));
-				outputWriter.print("\r\n");
-			}
-		}
-
-		// Send a terminating blank line to mark the end of the headers
-		outputWriter.print("\r\n");
-		outputWriter.flush();
-
-		committed = true;
+		cookies = new ArrayList<Cookie>();
+		buffer = new byte[BUFFER_SIZE];
+		this.headers = new HashMap<String, List<String>>();
+		message = getStatusMessage(HttpServletResponse.SC_OK);
+		status = HttpServletResponse.SC_OK;
 
 	}
 
-	private int getContentLength() {
-		// TODO Auto-generated method stub
-		return 0;
+	/**
+	 * call this method to send headers and response to the output
+	 */
+	public void finishResponse() {
+		// sendHeaders();
+		// Flush and close the appropriate output mechanism
+		if (writer != null) {
+			writer.flush();
+			writer.close();
+		}
 	}
 
-	private Object getContentType() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getContentLength() {
+		return contentLength;
 	}
 
-	private char[] getProtocol() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getContentType() {
+		return contentType;
 	}
 
-	private OutputStream getStream() {
-		// TODO Auto-generated method stub
-		return null;
+	protected String getProtocol() {
+		return request.getProtocol();
 	}
 
 	/**
@@ -187,7 +122,7 @@ public class HttpResponse implements HttpServletResponse {
 	 * @param status
 	 *            The status code for which a message is desired
 	 */
-	private String getStatusMessage(int status) {
+	protected String getStatusMessage(int status) {
 		switch (status) {
 		case SC_OK:
 			return ("OK");
@@ -280,48 +215,91 @@ public class HttpResponse implements HttpServletResponse {
 		}
 	}
 
-	public HttpRequest getRequest() {
-		return request;
+	public OutputStream getStream() {
+		return this.output;
 	}
 
-	public void setHeader(String name, String value) {
-		// if (included)
-		// return;
-		// Ignore any call from an included servlet
-		if (!isCommitted()) {
-			ArrayList<String> values = new ArrayList<String>();
-			values.add(value);
-			synchronized (headers) {
-				headers.put(name, values);
-			}
-			String match = name.toLowerCase();
-			if (match.equals("content-length")) {
-				int contentLength = -1;
-				try {
-					contentLength = Integer.parseInt(value);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
+	/**
+	 * Send the HTTP response headers, if this has not already occurred.
+	 */
+	protected void sendHeaders() throws IOException {
+		if (committed) {
+			return;
+		}
+		// Prepare a suitable output writer
+		OutputStreamWriter osr = null;
+		try {
+			osr = new OutputStreamWriter(getStream(), getCharacterEncoding());
+		} catch (UnsupportedEncodingException e) {
+			osr = new OutputStreamWriter(getStream());
+		}
+		final PrintWriter outputWriter = new PrintWriter(osr);
+		// Send the "Status:" header
+		outputWriter.print(this.getProtocol());
+		outputWriter.print(" ");
+		outputWriter.print(status);
+		if (message != null) {
+			outputWriter.print(" ");
+			outputWriter.print(message);
+		}
+		outputWriter.print("\r\n");
+		// Send the content-length and content-type headers (if any)
+		if (getContentType() != null) {
+			outputWriter.print("Content-Type: " + getContentType() + "\r\n");
+		}
+		if (getContentLength() >= 0) {
+			outputWriter.print("Content-Length: " + getContentLength() + "\r\n");
+		}
+		// Send all specified headers (if any)
+		synchronized (headers) {
+			Iterator<String> names = headers.keySet().iterator();
+			while (names.hasNext()) {
+				String name = (String) names.next();
+				List<String> values = headers.get(name);
+				Iterator<String> items = values.iterator();
+				while (items.hasNext()) {
+					String value = (String) items.next();
+					outputWriter.print(name);
+					outputWriter.print(": ");
+					outputWriter.print(value);
+					outputWriter.print("\r\n");
 				}
-				if (contentLength >= 0)
-					setContentLength(contentLength);
-			} else if (match.equals("content-type")) {
-				setContentType(value);
+			}
+		}
+		// Add the session ID cookie if necessary
+		/*
+		 * HttpServletRequest hreq = (HttpServletRequest) request.getRequest();
+		 * HttpSession session = hreq.getSession(false); if ((session != null)
+		 * && session.isNew() && (getContext() != null) &&
+		 * getContext().getCookies()) { Cookie cookie = new Cookie("JSESSIONID",
+		 * session.getId()); cookie.setMaxAge(-1); String contextPath = null; if
+		 * (context != null) contextPath = context.getPath(); if ((contextPath
+		 * != null) && (contextPath.length() > 0)) cookie.setPath(contextPath);
+		 * else
+		 * 
+		 * cookie.setPath("/"); if (hreq.isSecure()) cookie.setSecure(true);
+		 * addCookie(cookie); }
+		 */
+		// Send all specified cookies (if any)
+		synchronized (cookies) {
+			Iterator<Cookie> items = cookies.iterator();
+			while (items.hasNext()) {
+				Cookie cookie = (Cookie) items.next();
+				outputWriter.print(CookieTools.getCookieHeaderName(cookie));
+				outputWriter.print(": ");
+				outputWriter.print(CookieTools.getCookieHeaderValue(cookie));
+				outputWriter.print("\r\n");
 			}
 		}
 
+		// Send a terminating blank line to mark the end of the headers
+		outputWriter.print("\r\n");
+		outputWriter.flush();
+
+		committed = true;
 	}
 
-	public void finishResponse() {
-		if (writer != null) {
-			writer.flush();
-			writer.close();
-		}
-	}
-
-	public void setRequest(HttpRequest request) {
-		this.request = request;
-	}
-
+	/* This method is used to serve a static page */
 	public void sendStaticResource() throws IOException {
 		byte[] bytes = new byte[BUFFER_SIZE];
 		FileInputStream fis = null;
@@ -349,22 +327,137 @@ public class HttpResponse implements HttpServletResponse {
 		}
 	}
 
-	@Override
-	public String getCharacterEncoding() {
-		if (encoding == null) {
-			encoding = "ISO-8859-1";
-		}
-
-		return encoding;
+	public void write(int b) throws IOException {
+		if (bufferCount >= buffer.length)
+			flushBuffer();
+		buffer[bufferCount++] = (byte) b;
+		contentCount++;
 	}
 
-	@Override
-	public ServletOutputStream getOutputStream() throws IOException {
-		// TODO Auto-generated method stub
+	public void write(byte b[]) throws IOException {
+		write(b, 0, b.length);
+	}
+
+	public void write(byte b[], int off, int len) throws IOException {
+		// If the whole thing fits in the buffer, just put it there
+		if (len == 0)
+			return;
+		if (len <= (buffer.length - bufferCount)) {
+			System.arraycopy(b, off, buffer, bufferCount, len);
+			bufferCount += len;
+			contentCount += len;
+			return;
+		}
+
+		// Flush the buffer and start writing full-buffer-size chunks
+		flushBuffer();
+		int iterations = len / buffer.length;
+		int leftoverStart = iterations * buffer.length;
+		int leftoverLen = len - leftoverStart;
+		for (int i = 0; i < iterations; i++)
+			write(b, off + (i * buffer.length), buffer.length);
+
+		// Write the remainder (guaranteed to fit in the buffer)
+		if (leftoverLen > 0)
+			write(b, off + leftoverStart, leftoverLen);
+	}
+
+	/** implementation of HttpServletResponse */
+
+	public void addCookie(Cookie cookie) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		synchronized (cookies) {
+			cookies.add(cookie);
+		}
+	}
+
+	public void addDateHeader(String name, long value) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		addHeader(name, format.format(new Date(value)));
+	}
+
+	public void addHeader(String name, String value) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		synchronized (headers) {
+			List<String> values = headers.get(name);
+			if (values == null) {
+				values = new ArrayList<String>();
+				headers.put(name, values);
+			}
+
+			values.add(value);
+		}
+	}
+
+	public void addIntHeader(String name, int value) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		addHeader(name, "" + value);
+	}
+
+	public boolean containsHeader(String name) {
+		synchronized (headers) {
+			return (headers.get(name) != null);
+		}
+	}
+
+	public String encodeRedirectURL(String url) {
 		return null;
 	}
 
-	@Override
+	public String encodeRedirectUrl(String url) {
+		return encodeRedirectURL(url);
+	}
+
+	public String encodeUrl(String url) {
+		return encodeURL(url);
+	}
+
+	public String encodeURL(String url) {
+		return null;
+	}
+
+	public void flushBuffer() throws IOException {
+		// committed = true;
+		if (bufferCount > 0) {
+			try {
+				output.write(buffer, 0, bufferCount);
+			} finally {
+				bufferCount = 0;
+			}
+		}
+	}
+
+	public int getBufferSize() {
+		return 0;
+	}
+
+	public String getCharacterEncoding() {
+		if (encoding == null)
+			return ("ISO-8859-1");
+		else
+			return (encoding);
+	}
+
+	public Locale getLocale() {
+		return null;
+	}
+
+	public ServletOutputStream getOutputStream() throws IOException {
+		return null;
+	}
+
 	public PrintWriter getWriter() throws IOException {
 		ResponseStream newStream = new ResponseStream(this);
 		newStream.setCommit(false);
@@ -373,166 +466,110 @@ public class HttpResponse implements HttpServletResponse {
 		return writer;
 	}
 
-	@Override
-	public void setContentLength(int len) {
-		this.contentLength = len;
+	/**
+	 * Has the output of this response already been committed?
+	 */
+	public boolean isCommitted() {
+		return (committed);
 	}
 
-	@Override
+	public void reset() {
+	}
+
+	public void resetBuffer() {
+	}
+
+	public void sendError(int sc) throws IOException {
+	}
+
+	public void sendError(int sc, String message) throws IOException {
+	}
+
+	public void sendRedirect(String location) throws IOException {
+	}
+
+	public void setBufferSize(int size) {
+	}
+
+	public void setContentLength(int length) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		this.contentLength = length;
+	}
+
 	public void setContentType(String type) {
 		this.contentType = type;
 	}
 
-	@Override
-	public void setBufferSize(int size) {
-
+	public void setDateHeader(String name, long value) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		setHeader(name, format.format(new Date(value)));
 	}
 
-	@Override
-	public int getBufferSize() {
-
-		return 0;
+	public void setHeader(String name, String value) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		List<String> values = new ArrayList<String>();
+		values.add(value);
+		synchronized (headers) {
+			headers.put(name, values);
+		}
+		String match = name.toLowerCase();
+		if (match.equals("content-length")) {
+			int contentLength = -1;
+			try {
+				contentLength = Integer.parseInt(value);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			if (contentLength >= 0)
+				setContentLength(contentLength);
+		} else if (match.equals("content-type")) {
+			setContentType(value);
+		}
 	}
 
-	@Override
-	public void flushBuffer() throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void resetBuffer() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean isCommitted() {
-		return committed;
-	}
-
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setLocale(Locale loc) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Locale getLocale() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addCookie(Cookie cookie) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean containsHeader(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public String encodeURL(String url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String encodeRedirectURL(String url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String encodeUrl(String url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String encodeRedirectUrl(String url) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void sendError(int sc, String msg) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendError(int sc) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void sendRedirect(String location) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setDateHeader(String name, long date) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addDateHeader(String name, long date) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addHeader(String name, String value) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void setIntHeader(String name, int value) {
-		// TODO Auto-generated method stub
-
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
+		setHeader(name, "" + value);
 	}
 
-	@Override
-	public void addIntHeader(String name, int value) {
-		// TODO Auto-generated method stub
+	public void setLocale(Locale locale) {
+		if (committed)
+			return;
+		// if (included)
+		// return; // Ignore any call from an included servlet
 
+		// super.setLocale(locale);
+		String language = locale.getLanguage();
+		if ((language != null) && (language.length() > 0)) {
+			String country = locale.getCountry();
+			StringBuffer value = new StringBuffer(language);
+			if ((country != null) && (country.length() > 0)) {
+				value.append('-');
+				value.append(country);
+			}
+			setHeader("Content-Language", value.toString());
+		}
 	}
 
-	@Override
 	public void setStatus(int sc) {
-		// TODO Auto-generated method stub
-
 	}
 
-	@Override
-	public void setStatus(int sc, String sm) {
-		// TODO Auto-generated method stub
-
+	public void setStatus(int sc, String message) {
 	}
 
-	public void write(int b) {
-		// TODO Auto-generated method stub
-
+	public void setRequest(HttpRequest request) {
+		this.request = request;
 	}
-
-	public void write(byte[] b, int off, int actual) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

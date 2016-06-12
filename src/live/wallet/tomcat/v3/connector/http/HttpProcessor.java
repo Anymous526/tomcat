@@ -13,12 +13,14 @@ import org.apache.catalina.util.StringManager;
 import live.wallet.tomcat.v3.ServletProcessor;
 import live.wallet.tomcat.v3.StaticResourceProcessor;
 
-@SuppressWarnings("unused")
+/* this class used to be called HttpServer */
 public class HttpProcessor {
 
 	private HttpConnector connector;
 	private HttpRequest request;
 	private HttpResponse response;
+	private String method = null;
+	private String queryString = null;
 
 	private HttpRequestLine requestLine = new HttpRequestLine();
 
@@ -29,11 +31,16 @@ public class HttpProcessor {
 	}
 
 	public void process(Socket socket) {
-
+		SocketInputStream input;
+		OutputStream output;
 		try {
-			SocketInputStream input = new SocketInputStream(socket.getInputStream(), 2048);
-			OutputStream output = socket.getOutputStream();
+			input = new SocketInputStream(socket.getInputStream(), 2048);
+			output = socket.getOutputStream();
+
+			// create HttpRequest object and parse
 			request = new HttpRequest(input);
+
+			// create HttpResponse object
 			response = new HttpResponse(output);
 			response.setRequest(request);
 			response.setHeader("Server", "wallet Servlet Container ");
@@ -49,16 +56,29 @@ public class HttpProcessor {
 				processor.process(request, response);
 			}
 
+			// Close the socket
 			socket.close();
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ServletException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void parseHeader(SocketInputStream input) throws ServletException {
+	/**
+	 * This method is the simplified version of the similar method in
+	 * org.apache.catalina.connector.http.HttpProcessor. However, this method
+	 * only parses some "easy" headers, such as "cookie", "content-length", and
+	 * "content-type", and ignore other headers.
+	 * 
+	 * @param input
+	 *            The input stream connected to our socket
+	 *
+	 * @exception IOException
+	 *                if an input/output error occurs
+	 * @exception ServletException
+	 *                if a parsing error occurs
+	 */
+	private void parseHeader(SocketInputStream input) throws ServletException, IOException {
 
 		while (true) {
 			HttpHeader header = new HttpHeader();
@@ -109,25 +129,26 @@ public class HttpProcessor {
 	private void parseRequest(SocketInputStream input, OutputStream output) throws ServletException, IOException {
 
 		input.readRequestLine(requestLine);
-		String method = new String(requestLine.method, 0, requestLine.methodEnd);
+		String method = new String(requestLine.getMethod(), 0, requestLine.getMethodEnd());
 		String uri = null;
-		String protocol = new String(requestLine.protocol, 0, requestLine.protocolEnd);
+		String protocol = new String(requestLine.getProtocol(), 0, requestLine.getProtocolEnd());
 
 		// Validate the incoming request line
 		if (method.length() < 1) {
 			throw new ServletException("Missing HTTP request method");
-		} else if (requestLine.uriEnd < 1) {
+		} else if (requestLine.getUriEnd() < 1) {
 			throw new ServletException("Missing HTTP request URI");
 		}
 
 		// Parse any query parameters out of the request URI
 		int question = requestLine.indexOf("?");
 		if (question >= 0) {
-			request.setQueryString(new String(requestLine.uri, question + 1, requestLine.uriEnd - question - 1));
-			uri = new String(requestLine.uri, 0, question);
+			request.setQueryString(
+					new String(requestLine.getUri(), question + 1, requestLine.getUriEnd() - question - 1));
+			uri = new String(requestLine.getUri(), 0, question);
 		} else {
 			request.setQueryString(null);
-			uri = new String(requestLine.uri, 0, requestLine.uriEnd);
+			uri = new String(requestLine.getUri(), 0, requestLine.getUriEnd());
 		}
 
 		// Checking for an absolute URI (with the HTTP protocol)

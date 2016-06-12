@@ -1,5 +1,9 @@
 package live.wallet.tomcat.v3.connector.http;
 
+/**
+ * HTTP header enum type.
+ *
+ */
 public class HttpHeader {
 
 	public static final int INITIAL_NAME_SIZE = 32;
@@ -23,6 +27,7 @@ public class HttpHeader {
 		this.nameEnd = nameEnd;
 		this.value = value;
 		this.valueEnd = valueEnd;
+		this.hashCode = 0;
 
 	}
 
@@ -31,6 +36,7 @@ public class HttpHeader {
 		this.nameEnd = name.length();
 		this.value = value.toCharArray();
 		this.valueEnd = value.length();
+		this.hashCode = 0;
 
 	}
 
@@ -92,7 +98,7 @@ public class HttpHeader {
 		if (end != valueEnd) {
 			return false;
 		}
-		
+
 		for (int i = 0; i < end; i++) {
 			if (buf[i] != value[i])
 				return false;
@@ -122,18 +128,25 @@ public class HttpHeader {
 		int pos = 0;
 		while (pos < valueEnd) {
 			pos = valueIndexOf(firstChar, pos);
-			if (pos == -1)
+			if (pos == -1) {
 				return false;
-			if ((valueEnd - pos) < end)
+			}
+
+			if ((valueEnd - pos) < end) {
 				return false;
+			}
+
 			for (int i = 0; i < end; i++) {
-				if (value[i + pos] != buf[i])
+				if (value[i + pos] != buf[i]) {
 					break;
-				if (i == (end - 1))
+				}
+				if (i == (end - 1)) {
 					return true;
+				}
 			}
 			pos++;
 		}
+
 		return false;
 	}
 
@@ -171,8 +184,6 @@ public class HttpHeader {
 		return (equals(header.name, header.nameEnd)) && (valueEquals(header.value, header.valueEnd));
 	}
 
-	// --------------------------------------------------------- Object Methods
-
 	/**
 	 * Return hash code. The hash code of the HttpHeader object is the same as
 	 * returned by new String(name, 0, nameEnd).hashCode().
@@ -183,8 +194,10 @@ public class HttpHeader {
 			int off = 0;
 			char val[] = name;
 			int len = nameEnd;
-			for (int i = 0; i < len; i++)
+			for (int i = 0; i < len; i++) {
 				h = 31 * h + val[off++];
+			}
+			
 			hashCode = h;
 		}
 		return h;
