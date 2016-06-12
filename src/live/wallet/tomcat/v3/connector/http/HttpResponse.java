@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.util.CookieTools;
 
-import ex03.pyrmont.connector.http.Constants;
 import live.wallet.tomcat.v3.connector.ResponseStream;
 import live.wallet.tomcat.v3.connector.ResponseWriter;
 
