@@ -13,6 +13,7 @@ import org.apache.catalina.util.RequestUtil;
 import org.apache.catalina.util.StringManager;
 
 /* this class used to be called HttpServer */
+@SuppressWarnings("unused")
 public class HttpProcessor {
 
 	public HttpProcessor(HttpConnector connector) {
@@ -22,8 +23,10 @@ public class HttpProcessor {
 	/**
 	 * The HttpConnector with which this processor is associated.
 	 */
+
 	private HttpConnector connector = null;
 	private HttpRequest request;
+
 	private HttpRequestLine requestLine = new HttpRequestLine();
 	private HttpResponse response;
 

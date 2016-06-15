@@ -9,9 +9,9 @@ import org.apache.catalina.Wrapper;
 
 public class SimpleContextMapper implements Mapper {
 
-  /**
-   * The Container with which this Mapper is associated.
-   */
+	/**
+	 * The Container with which this Mapper is associated.
+	 */
   private SimpleContext context = null;
 
   public Container getContainer() {
