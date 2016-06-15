@@ -30,6 +30,7 @@ import org.apache.catalina.util.RequestUtil;
 
 import live.wallet.tomcat.v3.connector.RequestStream;
 
+@SuppressWarnings("unused")
 public class HttpRequest implements HttpServletRequest {
 
 	private String contentType;
@@ -51,7 +52,7 @@ public class HttpRequest implements HttpServletRequest {
 	/**
 	 * The request attributes for this request.
 	 */
-	protected HashMap attributes = new HashMap();
+	protected HashMap<?, ?> attributes = new HashMap<String, String>();
 	/**
 	 * The authorization credentials sent with this Request.
 	 */
@@ -68,7 +69,7 @@ public class HttpRequest implements HttpServletRequest {
 	 * An empty collection to use for returning empty Enumerations. Do not add
 	 * any elements to this collection!
 	 */
-	protected static ArrayList empty = new ArrayList();
+	protected static ArrayList<?> empty = new ArrayList<String>();
 	/**
 	 * The set of SimpleDateFormat formats to use in getDateHeader().
 	 */
@@ -313,7 +314,7 @@ public class HttpRequest implements HttpServletRequest {
 		}
 	}
 
-	public Enumeration getAttributeNames() {
+	public Enumeration<?> getAttributeNames() {
 		synchronized (attributes) {
 			return (new Enumerator(attributes.keySet()));
 		}
@@ -381,13 +382,13 @@ public class HttpRequest implements HttpServletRequest {
 		}
 	}
 
-	public Enumeration getHeaderNames() {
+	public Enumeration<?> getHeaderNames() {
 		synchronized (headers) {
 			return (new Enumerator(headers.keySet()));
 		}
 	}
 
-	public Enumeration getHeaders(String name) {
+	public Enumeration<?> getHeaders(String name) {
 		name = name.toLowerCase();
 		synchronized (headers) {
 			List<String> values = headers.get(name);
@@ -421,7 +422,7 @@ public class HttpRequest implements HttpServletRequest {
 		return null;
 	}
 
-	public Enumeration getLocales() {
+	public Enumeration<?> getLocales() {
 		return null;
 	}
 
@@ -438,12 +439,12 @@ public class HttpRequest implements HttpServletRequest {
 			return (null);
 	}
 
-	public Map getParameterMap() {
+	public Map<?, ?> getParameterMap() {
 		parseParameters();
 		return (this.parameters);
 	}
 
-	public Enumeration getParameterNames() {
+	public Enumeration<?> getParameterNames() {
 		parseParameters();
 		return (new Enumerator(parameters.keySet()));
 	}
@@ -477,7 +478,7 @@ public class HttpRequest implements HttpServletRequest {
 		if (stream != null) {
 			throw new IllegalStateException("getInputStream has been called.");
 		}
-		if (reader == null) {			
+		if (reader == null) {
 			InputStreamReader isr = new InputStreamReader(createInputStream(), getCharacterEncoding());
 			reader = new BufferedReader(isr);
 		}

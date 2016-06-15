@@ -23,7 +23,7 @@ public class RequestFacade implements ServletRequest {
 		return request.getAttribute(attribute);
 	}
 
-	public Enumeration getAttributeNames() {
+	public Enumeration<?> getAttributeNames() {
 		return request.getAttributeNames();
 	}
 
@@ -59,7 +59,7 @@ public class RequestFacade implements ServletRequest {
 		return request.getLocale();
 	}
 
-	public Enumeration getLocales() {
+	public Enumeration<?> getLocales() {
 		return request.getLocales();
 	}
 
@@ -67,11 +67,11 @@ public class RequestFacade implements ServletRequest {
 		return request.getParameter(name);
 	}
 
-	public Map getParameterMap() {
+	public Map<?, ?> getParameterMap() {
 		return request.getParameterMap();
 	}
 
-	public Enumeration getParameterNames() {
+	public Enumeration<?> getParameterNames() {
 		return request.getParameterNames();
 	}
 

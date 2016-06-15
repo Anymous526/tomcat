@@ -7,6 +7,7 @@ import javax.servlet.ServletOutputStream;
 
 import live.wallet.tomcat.v3.connector.http.HttpResponse;
 
+@SuppressWarnings("unused")
 public class ResponseStream extends ServletOutputStream {
 	/**
 	 * Has this stream been closed?
@@ -37,6 +38,7 @@ public class ResponseStream extends ServletOutputStream {
 	/**
 	 * The underlying output stream to which we should write data.
 	 */
+
 	private OutputStream stream;
 
 	public ResponseStream(HttpResponse response) {

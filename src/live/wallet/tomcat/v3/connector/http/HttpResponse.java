@@ -26,6 +26,7 @@ import org.apache.catalina.util.CookieTools;
 import live.wallet.tomcat.v3.connector.ResponseStream;
 import live.wallet.tomcat.v3.connector.ResponseWriter;
 
+@SuppressWarnings({"deprecation","unused"})
 public class HttpResponse implements HttpServletResponse {
 
 	private static final int BUFFER_SIZE = 1024;
@@ -221,6 +222,7 @@ public class HttpResponse implements HttpServletResponse {
 	/**
 	 * Send the HTTP response headers, if this has not already occurred.
 	 */
+
 	protected void sendHeaders() throws IOException {
 		if (committed) {
 			return;

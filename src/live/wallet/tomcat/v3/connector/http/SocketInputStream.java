@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 import org.apache.catalina.util.StringManager;
 
+@SuppressWarnings("unused")
 public class SocketInputStream extends InputStream {
 
 	public static final byte CR = (byte) '\r';
@@ -73,6 +74,7 @@ public class SocketInputStream extends InputStream {
 		// Reading the method name
 
 		int maxRead = requestLine.getMethod().length;
+
 		int readStart = pos;
 		int readCount = 0;
 

@@ -14,6 +14,7 @@ import live.wallet.tomcat.v3.ServletProcessor;
 import live.wallet.tomcat.v3.StaticResourceProcessor;
 
 /* this class used to be called HttpServer */
+@SuppressWarnings("unused")
 public class HttpProcessor {
 
 	private HttpConnector connector;

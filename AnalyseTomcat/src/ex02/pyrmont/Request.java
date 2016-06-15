@@ -58,7 +58,7 @@ public class Request implements ServletRequest {
 		return null;
 	}
 
-	public Enumeration getAttributeNames() {
+	public Enumeration<?> getAttributeNames() {
 		return null;
 	}
 
@@ -94,7 +94,7 @@ public class Request implements ServletRequest {
 		return null;
 	}
 
-	public Enumeration getLocales() {
+	public Enumeration<?> getLocales() {
 		return null;
 	}
 
@@ -102,11 +102,11 @@ public class Request implements ServletRequest {
 		return null;
 	}
 
-	public Map getParameterMap() {
+	public Map<?, ?> getParameterMap() {
 		return null;
 	}
 
-	public Enumeration getParameterNames() {
+	public Enumeration<?> getParameterNames() {
 		return null;
 	}
 

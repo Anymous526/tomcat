@@ -15,6 +15,7 @@ import live.wallet.tomcat.v3.connector.http.HttpRequestFacade;
 import live.wallet.tomcat.v3.connector.http.HttpResponse;
 import live.wallet.tomcat.v3.connector.http.HttpResponseFacade;
 
+@SuppressWarnings({ "resource", "unchecked" })
 public class ServletProcessor {
 
 	public void process(HttpRequest request, HttpResponse response) {

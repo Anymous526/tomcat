@@ -210,9 +210,9 @@ public class SimpleContainer implements Container {
 		} catch (IOException e) {
 			System.out.println(e.toString());
 		}
-		Class myClass = null;
+		Class<?> clazz = null;
 		try {
-			myClass = loader.loadClass(servletName);
+			clazz = loader.loadClass(servletName);
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.toString());
 		}
@@ -220,7 +220,7 @@ public class SimpleContainer implements Container {
 		Servlet servlet = null;
 
 		try {
-			servlet = (Servlet) myClass.newInstance();
+			servlet = (Servlet) clazz.newInstance();
 			servlet.service((HttpServletRequest) request, (HttpServletResponse) response);
 		} catch (Exception e) {
 			System.out.println(e.toString());

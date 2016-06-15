@@ -34,9 +34,9 @@ public class ServletProcessor2 {
 		} catch (IOException e) {
 			System.out.println(e.toString());
 		}
-		Class myClass = null;
+		Class<?> clazz = null;
 		try {
-			myClass = loader.loadClass(servletName);
+			clazz = loader.loadClass(servletName);
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.toString());
 		}
@@ -45,7 +45,7 @@ public class ServletProcessor2 {
 		RequestFacade requestFacade = new RequestFacade(request);
 		ResponseFacade responseFacade = new ResponseFacade(response);
 		try {
-			servlet = (Servlet) myClass.newInstance();
+			servlet = (Servlet) clazz.newInstance();
 			servlet.service((ServletRequest) requestFacade, (ServletResponse) responseFacade);
 		} catch (Exception e) {
 			System.out.println(e.toString());

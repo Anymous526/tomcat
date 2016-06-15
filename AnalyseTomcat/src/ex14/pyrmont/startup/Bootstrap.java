@@ -21,6 +21,7 @@ import org.apache.catalina.core.StandardService;
 import org.apache.catalina.core.StandardWrapper;
 import org.apache.catalina.loader.WebappLoader;
 
+@SuppressWarnings("deprecation")
 public final class Bootstrap {
   public static void main(String[] args) {
 

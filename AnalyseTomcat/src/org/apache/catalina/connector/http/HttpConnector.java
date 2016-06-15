@@ -35,7 +35,7 @@ import org.apache.catalina.util.StringManager;
  * @version $Revision: 1.34 $ $Date: 2002/03/18 07:15:39 $
  * @deprecated
  */
-
+@Deprecated
 public final class HttpConnector implements Connector, Lifecycle, Runnable {
 
 	// ----------------------------------------------------- Instance Variables
@@ -69,7 +69,7 @@ public final class HttpConnector implements Connector, Lifecycle, Runnable {
 	/**
 	 * The set of processors that have ever been created.
 	 */
-	private Vector created = new Vector();
+	private Vector<HttpProcessor> created = new Vector<HttpProcessor>();
 
 	/**
 	 * The current number of processors that have been created.
@@ -126,7 +126,7 @@ public final class HttpConnector implements Connector, Lifecycle, Runnable {
 	 * The set of processors that have been created but are not currently being
 	 * used to process a request.
 	 */
-	private Stack processors = new Stack();
+	private Stack<HttpProcessor> processors = new Stack<HttpProcessor>();
 
 	/**
 	 * The server name to which we should pretend requests to this Connector
@@ -700,6 +700,7 @@ public final class HttpConnector implements Connector, Lifecycle, Runnable {
 	 * @param processor
 	 *            The processor to be recycled
 	 */
+
 	void recycle(HttpProcessor processor) {
 
 		// if (debug >= 2)
