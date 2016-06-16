@@ -15,6 +15,8 @@ import live.wallet.tomcat.v5.core.SimpleWrapper;
 import live.wallet.tomcat.v5.valves.ClientIPLoggerValve;
 import live.wallet.tomcat.v5.valves.HeaderLoggerValve;
 
+
+@SuppressWarnings("deprecation")
 public class Bootstrap2 {
 
 	public static void main(String[] args) {

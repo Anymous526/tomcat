@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v5.core;
+package live.wallet.tomcat.v7.core;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,9 +8,8 @@ import org.apache.catalina.Mapper;
 import org.apache.catalina.Request;
 import org.apache.catalina.Wrapper;
 
-import ex05.pyrmont.core.SimpleContext;
+import ex07.pyrmont.core.SimpleContext;
 
-@SuppressWarnings("unused")
 public class SimpleContextMapper implements Mapper {
 	/**
 	 * The Container with which this Mapper is associated.
@@ -27,6 +26,7 @@ public class SimpleContextMapper implements Mapper {
 		if (!(container instanceof SimpleContext))
 			throw new IllegalArgumentException("Illegal type of container");
 		context = (SimpleContext) container;
+
 	}
 
 	@Override
@@ -56,6 +56,9 @@ public class SimpleContextMapper implements Mapper {
 	 */
 	@Override
 	public Container map(Request request, boolean update) {
+		// Has this request already been mapped?
+		if (update && (request.getWrapper() != null))
+			return (request.getWrapper());
 		// Identify the context-relative URI to be mapped
 		String contextPath = ((HttpServletRequest) request.getRequest()).getContextPath();
 		String requestURI = ((HttpRequest) request).getDecodedRequestURI();
@@ -67,6 +70,13 @@ public class SimpleContextMapper implements Mapper {
 		String name = context.findServletMapping(relativeURI);
 		if (name != null)
 			wrapper = (Wrapper) context.findChild(name);
+
+		// Update the Request (if requested) and return this Wrapper
+		if (update) {
+			request.setWrapper(wrapper);
+			((HttpRequest) request).setServletPath(servletPath);
+			((HttpRequest) request).setPathInfo(pathInfo);
+		}
 		return (wrapper);
 	}
 

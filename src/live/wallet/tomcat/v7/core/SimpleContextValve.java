@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v5.core;
+package live.wallet.tomcat.v7.core;
 
 import java.io.IOException;
 
@@ -18,13 +18,29 @@ import org.apache.catalina.Wrapper;
 
 public class SimpleContextValve implements Valve, Contained {
 
-	private Container container;
+	protected Container container;
 
-	@SuppressWarnings("unused")
 	@Override
-	public void invoke(Request request, Response response, ValveContext valueContext)
+	public Container getContainer() {
+		return this.container;
+	}
+
+	@Override
+	public void setContainer(Container container) {
+		this.container = container;
+
+	}
+
+	@Override
+	public String getInfo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void invoke(Request request, Response response, ValveContext valveContext)
 			throws IOException, ServletException {
-		// Validate the request and response object types
+		// Validate the request and response object type
 		if (!(request.getRequest() instanceof HttpServletRequest)
 				|| !(response.getResponse() instanceof HttpServletResponse)) {
 			return; // NOTE - Not much else we can do generically
@@ -55,29 +71,13 @@ public class SimpleContextValve implements Valve, Contained {
 
 	}
 
-	@Override
-	public String getInfo() {
-		return null;
-	}
-
-	@Override
-	public Container getContainer() {
-		return this.container;
-	}
-
-	@Override
-	public void setContainer(Container container) {
-		this.container = container;
-
-	}
-
 	private void badRequest(String requestURI, HttpServletResponse response) {
 		try {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, requestURI);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			;
 		} catch (IOException e) {
-			e.printStackTrace();
+			;
 		}
 	}
 
@@ -85,9 +85,10 @@ public class SimpleContextValve implements Valve, Contained {
 		try {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND, requestURI);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			;
 		} catch (IOException e) {
-			e.printStackTrace();
+			;
 		}
 	}
+
 }

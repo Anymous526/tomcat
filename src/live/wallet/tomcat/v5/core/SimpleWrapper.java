@@ -75,17 +75,17 @@ public class SimpleWrapper implements Wrapper, Pipeline {
 		ClassLoader classLoader = loader.getClassLoader();
 
 		// Load the specified servlet class from the appropriate class loader
-		Class classClass = null;
+		Class<?> calzz = null;
 		try {
 			if (classLoader != null) {
-				classClass = classLoader.loadClass(actualClass);
+				calzz = classLoader.loadClass(actualClass);
 			}
 		} catch (ClassNotFoundException e) {
 			throw new ServletException("Servlet class not found");
 		}
 		// Instantiate and initialize an instance of the servlet class itself
 		try {
-			servlet = (Servlet) classClass.newInstance();
+			servlet = (Servlet) calzz.newInstance();
 		} catch (Throwable e) {
 			throw new ServletException("Failed to instantiate servlet");
 		}

@@ -11,6 +11,7 @@ import ex05.pyrmont.core.SimpleWrapper;
 import ex05.pyrmont.valves.ClientIPLoggerValve;
 import ex05.pyrmont.valves.HeaderLoggerValve;
 
+@SuppressWarnings("deprecation")
 public class Bootstrap1 {
 	public static void main(String[] args) {
 
