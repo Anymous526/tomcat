@@ -1,6 +1,6 @@
-package live.wallet.tomcat.v3.startup;
+package live.wallet.tomcat.v03.startup;
 
-import live.wallet.tomcat.v3.connector.http.HttpConnector;
+import live.wallet.tomcat.v03.connector.http.HttpConnector;
 
 public class Bootstrap {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3.connector.http;
+package live.wallet.tomcat.v03.connector.http;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,8 +10,8 @@ import javax.servlet.http.Cookie;
 import org.apache.catalina.util.RequestUtil;
 import org.apache.catalina.util.StringManager;
 
-import live.wallet.tomcat.v3.ServletProcessor;
-import live.wallet.tomcat.v3.StaticResourceProcessor;
+import live.wallet.tomcat.v03.ServletProcessor;
+import live.wallet.tomcat.v03.StaticResourceProcessor;
 
 /* this class used to be called HttpServer */
 @SuppressWarnings("unused")

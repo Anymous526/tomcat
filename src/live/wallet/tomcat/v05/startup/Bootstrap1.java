@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v5.startup;
+package live.wallet.tomcat.v05.startup;
 
 import org.apache.catalina.Loader;
 import org.apache.catalina.Pipeline;

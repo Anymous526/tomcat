@@ -1,9 +1,10 @@
-package live.wallet.tomcat.v3;
+package live.wallet.tomcat.v03;
 
 import java.io.IOException;
 
-import live.wallet.tomcat.v3.connector.http.HttpRequest;
-import live.wallet.tomcat.v3.connector.http.HttpResponse;
+
+import live.wallet.tomcat.v03.connector.http.HttpRequest;
+import live.wallet.tomcat.v03.connector.http.HttpResponse;
 
 public class StaticResourceProcessor {
 	

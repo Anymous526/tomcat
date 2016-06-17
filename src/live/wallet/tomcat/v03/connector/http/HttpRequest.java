@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3.connector.http;
+package live.wallet.tomcat.v03.connector.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import org.apache.catalina.util.Enumerator;
 import org.apache.catalina.util.ParameterMap;
 import org.apache.catalina.util.RequestUtil;
 
-import live.wallet.tomcat.v3.connector.RequestStream;
+import live.wallet.tomcat.v03.connector.RequestStream;
 
 @SuppressWarnings("unused")
 public class HttpRequest implements HttpServletRequest {

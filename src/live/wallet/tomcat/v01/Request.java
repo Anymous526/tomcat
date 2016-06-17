@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v1;
+package live.wallet.tomcat.v01;
 
 import java.io.InputStream;
 

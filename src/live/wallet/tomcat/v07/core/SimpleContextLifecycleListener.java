@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v7.core;
+package live.wallet.tomcat.v07.core;
 
 import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;

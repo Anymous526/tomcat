@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v5.core;
+package live.wallet.tomcat.v05.core;
 
 import java.io.IOException;
 

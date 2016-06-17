@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3.connector;
+package live.wallet.tomcat.v03.connector;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;

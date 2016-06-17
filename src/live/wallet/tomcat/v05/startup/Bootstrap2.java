@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v5.startup;
+package live.wallet.tomcat.v05.startup;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.Loader;
@@ -8,12 +8,14 @@ import org.apache.catalina.Valve;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.http.HttpConnector;
 
-import live.wallet.tomcat.v5.core.SimpleContext;
-import live.wallet.tomcat.v5.core.SimpleContextMapper;
-import live.wallet.tomcat.v5.core.SimpleLoader;
-import live.wallet.tomcat.v5.core.SimpleWrapper;
-import live.wallet.tomcat.v5.valves.ClientIPLoggerValve;
-import live.wallet.tomcat.v5.valves.HeaderLoggerValve;
+import live.wallet.tomcat.v05.core.SimpleContext;
+import live.wallet.tomcat.v05.core.SimpleContextMapper;
+import live.wallet.tomcat.v05.core.SimpleLoader;
+import live.wallet.tomcat.v05.core.SimpleWrapper;
+import live.wallet.tomcat.v05.valves.ClientIPLoggerValve;
+import live.wallet.tomcat.v05.valves.HeaderLoggerValve;
+
+
 
 
 @SuppressWarnings("deprecation")

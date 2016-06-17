@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3.connector;
+package live.wallet.tomcat.v03.connector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,8 @@ import javax.servlet.ServletInputStream;
 
 import org.apache.catalina.util.StringManager;
 
-import live.wallet.tomcat.v3.connector.http.Constants;
-import live.wallet.tomcat.v3.connector.http.HttpRequest;
+import live.wallet.tomcat.v03.connector.http.Constants;
+import live.wallet.tomcat.v03.connector.http.HttpRequest;
 
 /**
  * Convenience implementation of <b>ServletInputStream</b> that works with the

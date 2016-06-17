@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v7.core;
+package live.wallet.tomcat.v07.core;
 
 import javax.servlet.http.HttpServletRequest;
 

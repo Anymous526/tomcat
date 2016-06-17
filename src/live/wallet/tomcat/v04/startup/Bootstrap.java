@@ -1,8 +1,8 @@
-package live.wallet.tomcat.v4.startup;
+package live.wallet.tomcat.v04.startup;
 
 import org.apache.catalina.connector.http.HttpConnector;
 
-import live.wallet.tomcat.v4.core.SimpleContainer;
+import live.wallet.tomcat.v04.core.SimpleContainer;
 
 @SuppressWarnings("deprecation")
 public class Bootstrap {

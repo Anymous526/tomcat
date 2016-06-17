@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v7.startup;
+package live.wallet.tomcat.v07.startup;
 
 import org.apache.catalina.Connector;
 import org.apache.catalina.Context;

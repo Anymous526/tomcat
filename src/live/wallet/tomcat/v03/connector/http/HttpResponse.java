@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3.connector.http;
+package live.wallet.tomcat.v03.connector.http;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.util.CookieTools;
 
-import live.wallet.tomcat.v3.connector.ResponseStream;
-import live.wallet.tomcat.v3.connector.ResponseWriter;
+import live.wallet.tomcat.v03.connector.ResponseStream;
+import live.wallet.tomcat.v03.connector.ResponseWriter;
 
 @SuppressWarnings({"deprecation","unused"})
 public class HttpResponse implements HttpServletResponse {

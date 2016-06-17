@@ -1,11 +1,11 @@
-package live.wallet.tomcat.v3.connector;
+package live.wallet.tomcat.v03.connector;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.servlet.ServletOutputStream;
 
-import live.wallet.tomcat.v3.connector.http.HttpResponse;
+import live.wallet.tomcat.v03.connector.http.HttpResponse;
 
 @SuppressWarnings("unused")
 public class ResponseStream extends ServletOutputStream {

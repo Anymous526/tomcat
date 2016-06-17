@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3;
+package live.wallet.tomcat.v03;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,11 +9,12 @@ import java.net.URLStreamHandler;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 
-import live.wallet.tomcat.v3.connector.http.Constants;
-import live.wallet.tomcat.v3.connector.http.HttpRequest;
-import live.wallet.tomcat.v3.connector.http.HttpRequestFacade;
-import live.wallet.tomcat.v3.connector.http.HttpResponse;
-import live.wallet.tomcat.v3.connector.http.HttpResponseFacade;
+import live.wallet.tomcat.v03.connector.http.Constants;
+import live.wallet.tomcat.v03.connector.http.HttpRequest;
+import live.wallet.tomcat.v03.connector.http.HttpRequestFacade;
+import live.wallet.tomcat.v03.connector.http.HttpResponse;
+import live.wallet.tomcat.v03.connector.http.HttpResponseFacade;
+
 
 @SuppressWarnings({ "resource", "unchecked" })
 public class ServletProcessor {

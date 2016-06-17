@@ -1,4 +1,4 @@
-package live.wallet.tomcat.v3.connector.http;
+package live.wallet.tomcat.v03.connector.http;
 
 import java.io.File;
 
