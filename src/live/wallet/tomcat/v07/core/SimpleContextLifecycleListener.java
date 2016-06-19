@@ -6,6 +6,7 @@ import org.apache.catalina.LifecycleListener;
 
 public class SimpleContextLifecycleListener implements LifecycleListener {
 
+	@SuppressWarnings("unused")
 	@Override
 	public void lifecycleEvent(LifecycleEvent event) {
 		Lifecycle lifecycle = event.getLifecycle();

@@ -37,6 +37,7 @@ public class SimpleContextValve implements Valve, Contained {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void invoke(Request request, Response response, ValveContext valveContext)
 			throws IOException, ServletException {

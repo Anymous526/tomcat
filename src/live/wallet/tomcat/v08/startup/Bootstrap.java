@@ -15,6 +15,7 @@ import org.apache.naming.resources.ProxyDirContext;
 import ex08.pyrmont.core.SimpleContextConfig;
 import ex08.pyrmont.core.SimpleWrapper;
 
+@SuppressWarnings("deprecation")
 public class Bootstrap {
 	public static void main(String[] args) {
 		// invoke: http://localhost:8080/Modern or

@@ -16,7 +16,10 @@ import ex07.pyrmont.core.SimpleContextMapper;
 import ex07.pyrmont.core.SimpleLoader;
 import ex07.pyrmont.core.SimpleWrapper;
 
+
+@SuppressWarnings("deprecation")
 public class Bootstrap {
+
 	public static void main(String[] args) {
 		Connector connector = new HttpConnector();
 		Wrapper wrapper1 = new SimpleWrapper();

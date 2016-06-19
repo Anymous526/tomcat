@@ -3,6 +3,7 @@ package live.wallet.tomcat.v07.core;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.naming.directory.DirContext;
 import javax.servlet.ServletContext;
@@ -40,16 +41,15 @@ import org.apache.catalina.deploy.SecurityConstraint;
 import org.apache.catalina.util.CharsetMapper;
 import org.apache.catalina.util.LifecycleSupport;
 
-
 public class SimpleContext implements Context, Pipeline, Lifecycle {
-	protected HashMap children = new HashMap();
+	protected Map<String, Container> children = new HashMap<String, Container>();
 	private Loader loader = null;
 	private Logger logger = null;
 	protected LifecycleSupport lifecycle = new LifecycleSupport(this);
 	private SimplePipeline pipeline = new SimplePipeline(this);
-	private HashMap servletMappings = new HashMap();
+	private Map<String, String> servletMappings = new HashMap<String, String>();
 	protected Mapper mapper = null;
-	protected HashMap mappers = new HashMap();
+	protected Map<String, Mapper> mappers = new HashMap<String, Mapper>();
 	private Container parent = null;
 	protected boolean started = false;
 

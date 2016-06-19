@@ -27,10 +27,6 @@ import org.apache.catalina.Valve;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.util.LifecycleSupport;
 
-import com.sun.org.apache.xerces.internal.parsers.CachingParserPool.SynchronizedGrammarPool;
-
-import ex08.pyrmont.core.SimplePipeline;
-
 public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
 	// the servlet instance
 	private Servlet instance = null;
@@ -78,17 +74,17 @@ public class SimpleWrapper implements Wrapper, Pipeline, Lifecycle {
 		ClassLoader classLoader = loader.getClassLoader();
 
 		// Load the specified servlet class from the appropriate class loader
-		Class classClass = null;
+		Class<?> clazz = null;
 		try {
 			if (classLoader != null) {
-				classClass = classLoader.loadClass(actualClass);
+				clazz = classLoader.loadClass(actualClass);
 			}
 		} catch (ClassNotFoundException e) {
 			throw new ServletException("Servlet class not found");
 		}
 		// Instantiate and initialize an instance of the servlet class itself
 		try {
-			servlet = (Servlet) classClass.newInstance();
+			servlet = (Servlet) clazz.newInstance();
 		} catch (Throwable e) {
 			throw new ServletException("Failed to instantiate servlet");
 		}

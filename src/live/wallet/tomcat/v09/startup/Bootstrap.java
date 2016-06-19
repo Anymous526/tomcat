@@ -15,6 +15,7 @@ import org.apache.catalina.session.StandardManager;
 import ex09.pyrmont.core.SimpleContextConfig;
 import ex09.pyrmont.core.SimpleWrapper;
 
+@SuppressWarnings("deprecation")
 public class Bootstrap {
 	public static void main(String[] args) {
 
