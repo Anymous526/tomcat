@@ -13,7 +13,7 @@ import org.apache.catalina.util.RequestUtil;
 import org.apache.catalina.util.StringManager;
 
 /* this class used to be called HttpServer */
-@SuppressWarnings("unused")
+@SuppressWarnings({ "unused", "deprecation" })
 public class HttpProcessor {
 
 	public HttpProcessor(HttpConnector connector) {

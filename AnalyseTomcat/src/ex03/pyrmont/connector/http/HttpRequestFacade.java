@@ -13,213 +13,214 @@ import javax.servlet.http.Cookie;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
 
+@SuppressWarnings({ "unused", "deprecation" })
 public class HttpRequestFacade implements HttpServletRequest {
 
-  private HttpServletRequest request;
+	private HttpServletRequest request;
 
-  public HttpRequestFacade(HttpRequest request) {
-    this.request = request;
-  }
+	public HttpRequestFacade(HttpRequest request) {
+		this.request = request;
+	}
 
-  /* implementation of the HttpServletRequest*/
-  public Object getAttribute(String name) {
-    return request.getAttribute(name);
-  }
+	/* implementation of the HttpServletRequest */
+	public Object getAttribute(String name) {
+		return request.getAttribute(name);
+	}
 
-  public Enumeration getAttributeNames() {
-    return request.getAttributeNames();
-  }
+	public Enumeration getAttributeNames() {
+		return request.getAttributeNames();
+	}
 
-  public String getAuthType() {
-    return request.getAuthType();
-  }
+	public String getAuthType() {
+		return request.getAuthType();
+	}
 
-  public String getCharacterEncoding() {
-    return request.getCharacterEncoding();
-  }
+	public String getCharacterEncoding() {
+		return request.getCharacterEncoding();
+	}
 
-  public int getContentLength() {
-    return request.getContentLength();
-  }
+	public int getContentLength() {
+		return request.getContentLength();
+	}
 
-  public String getContentType() {
-    return request.getContentType();
-  }
+	public String getContentType() {
+		return request.getContentType();
+	}
 
-  public String getContextPath() {
-    return request.getContextPath();
-  }
+	public String getContextPath() {
+		return request.getContextPath();
+	}
 
-  public Cookie[] getCookies() {
-    return request.getCookies();
-  }
+	public Cookie[] getCookies() {
+		return request.getCookies();
+	}
 
-  public long getDateHeader(String name) {
-    return request.getDateHeader(name);
-  }
+	public long getDateHeader(String name) {
+		return request.getDateHeader(name);
+	}
 
-  public Enumeration getHeaderNames() {
-    return request.getHeaderNames();
-  }
+	public Enumeration getHeaderNames() {
+		return request.getHeaderNames();
+	}
 
-  public String getHeader(String name) {
-    return request.getHeader(name);
-  }
+	public String getHeader(String name) {
+		return request.getHeader(name);
+	}
 
-  public Enumeration getHeaders(String name) {
-    return request.getHeaders(name);
-  }
+	public Enumeration getHeaders(String name) {
+		return request.getHeaders(name);
+	}
 
-  public ServletInputStream getInputStream() throws IOException {
-    return request.getInputStream();
-  }
+	public ServletInputStream getInputStream() throws IOException {
+		return request.getInputStream();
+	}
 
-  public int getIntHeader(String name) {
-    return request.getIntHeader(name);
-  }
+	public int getIntHeader(String name) {
+		return request.getIntHeader(name);
+	}
 
-  public Locale getLocale() {
-    return request.getLocale();
-  }
+	public Locale getLocale() {
+		return request.getLocale();
+	}
 
-  public Enumeration getLocales() {
-    return request.getLocales();
-  }
+	public Enumeration getLocales() {
+		return request.getLocales();
+	}
 
-  public String getMethod() {
-    return request.getMethod();
-  }
+	public String getMethod() {
+		return request.getMethod();
+	}
 
-  public String getParameter(String name) {
-    return request.getParameter(name);
-  }
+	public String getParameter(String name) {
+		return request.getParameter(name);
+	}
 
-  public Map getParameterMap() {
-    return request.getParameterMap();
-  }
+	public Map getParameterMap() {
+		return request.getParameterMap();
+	}
 
-  public Enumeration getParameterNames() {
-    return request.getParameterNames();
-  }
+	public Enumeration getParameterNames() {
+		return request.getParameterNames();
+	}
 
-  public String[] getParameterValues(String name) {
-    return request.getParameterValues(name);
-  }
+	public String[] getParameterValues(String name) {
+		return request.getParameterValues(name);
+	}
 
-  public String getPathInfo() {
-    return request.getPathInfo();
-  }
+	public String getPathInfo() {
+		return request.getPathInfo();
+	}
 
-  public String getPathTranslated() {
-    return request.getPathTranslated();
-  }
+	public String getPathTranslated() {
+		return request.getPathTranslated();
+	}
 
-  public String getProtocol() {
-    return request.getProtocol();
-  }
+	public String getProtocol() {
+		return request.getProtocol();
+	}
 
-  public String getQueryString() {
-    return request.getQueryString();
-  }
+	public String getQueryString() {
+		return request.getQueryString();
+	}
 
-  public BufferedReader getReader() throws IOException {
-    return request.getReader();
-  }
+	public BufferedReader getReader() throws IOException {
+		return request.getReader();
+	}
 
-  public String getRealPath(String path) {
-    return request.getRealPath(path);
-  }
+	public String getRealPath(String path) {
+		return request.getRealPath(path);
+	}
 
-  public String getRemoteAddr() {
-    return request.getRemoteAddr();
-  }
+	public String getRemoteAddr() {
+		return request.getRemoteAddr();
+	}
 
-  public String getRemoteHost() {
-    return request.getRemoteHost();
-  }
+	public String getRemoteHost() {
+		return request.getRemoteHost();
+	}
 
-  public String getRemoteUser() {
-    return request.getRemoteUser();
-  }
+	public String getRemoteUser() {
+		return request.getRemoteUser();
+	}
 
-  public RequestDispatcher getRequestDispatcher(String path) {
-    return request.getRequestDispatcher(path);
-  }
+	public RequestDispatcher getRequestDispatcher(String path) {
+		return request.getRequestDispatcher(path);
+	}
 
-  public String getRequestedSessionId() {
-    return request.getRequestedSessionId();
-  }
+	public String getRequestedSessionId() {
+		return request.getRequestedSessionId();
+	}
 
-  public String getRequestURI() {
-    return request.getRequestURI();
-  }
+	public String getRequestURI() {
+		return request.getRequestURI();
+	}
 
-  public StringBuffer getRequestURL() {
-    return request.getRequestURL();
-  }
+	public StringBuffer getRequestURL() {
+		return request.getRequestURL();
+	}
 
-  public String getScheme() {
-   return request.getScheme();
-  }
+	public String getScheme() {
+		return request.getScheme();
+	}
 
-  public String getServerName() {
-    return request.getServerName();
-  }
+	public String getServerName() {
+		return request.getServerName();
+	}
 
-  public int getServerPort() {
-    return request.getServerPort();
-  }
+	public int getServerPort() {
+		return request.getServerPort();
+	}
 
-  public HttpSession getSession() {
-    return request.getSession();
-  }
+	public HttpSession getSession() {
+		return request.getSession();
+	}
 
-  public HttpSession getSession(boolean create) {
-    return request.getSession(create);
-  }
+	public HttpSession getSession(boolean create) {
+		return request.getSession(create);
+	}
 
-  public String getServletPath() {
-    return request.getServletPath();
-  }
+	public String getServletPath() {
+		return request.getServletPath();
+	}
 
-  public Principal getUserPrincipal() {
-    return request.getUserPrincipal();
-  }
+	public Principal getUserPrincipal() {
+		return request.getUserPrincipal();
+	}
 
-  public boolean isRequestedSessionIdFromCookie() {
-    return request.isRequestedSessionIdFromCookie();
-  }
+	public boolean isRequestedSessionIdFromCookie() {
+		return request.isRequestedSessionIdFromCookie();
+	}
 
-  public boolean isRequestedSessionIdFromUrl() {
-    return request.isRequestedSessionIdFromURL();
-  }
+	public boolean isRequestedSessionIdFromUrl() {
+		return request.isRequestedSessionIdFromURL();
+	}
 
-  public boolean isRequestedSessionIdFromURL() {
-    return request.isRequestedSessionIdFromURL();
-  }
+	public boolean isRequestedSessionIdFromURL() {
+		return request.isRequestedSessionIdFromURL();
+	}
 
-  public boolean isRequestedSessionIdValid() {
-    return request.isRequestedSessionIdValid();
-  }
+	public boolean isRequestedSessionIdValid() {
+		return request.isRequestedSessionIdValid();
+	}
 
-  public boolean isSecure() {
-    return request.isSecure();
-  }
+	public boolean isSecure() {
+		return request.isSecure();
+	}
 
-  public boolean isUserInRole(String role) {
-    return request.isUserInRole(role);
-  }
+	public boolean isUserInRole(String role) {
+		return request.isUserInRole(role);
+	}
 
-  public void removeAttribute(String attribute) {
-    request.removeAttribute(attribute);
-  }
+	public void removeAttribute(String attribute) {
+		request.removeAttribute(attribute);
+	}
 
-  public void setAttribute(String key, Object value) {
-    request.setAttribute(key, value);
-  }
+	public void setAttribute(String key, Object value) {
+		request.setAttribute(key, value);
+	}
 
-  public void setCharacterEncoding(String encoding) throws UnsupportedEncodingException {
-    request.setCharacterEncoding(encoding);
-  }
+	public void setCharacterEncoding(String encoding) throws UnsupportedEncodingException {
+		request.setCharacterEncoding(encoding);
+	}
 
 }
