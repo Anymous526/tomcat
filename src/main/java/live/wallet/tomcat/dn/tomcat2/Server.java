@@ -19,14 +19,16 @@ public class Server {
 				socket = ss.accept();
 
 				HttpRequest request = new HttpRequest(socket.getInputStream());
+				HttpResponse response = new HttpResponse(socket.getOutputStream());
+				String uri = request.getUri();
 
-				OutputStream os = socket.getOutputStream();
+				if (isStatic(uri)) {
+					response.writerFile(uri.substring(1));
+				}
+
 				String html = "<html><head><title>SSB</title></head><body>当前时间: "
 						+ "<br/> 服务器回复 : <font size='12' color='blue'> 哈哈哈 </font></body></html>";
-				os.write(html.getBytes("GBK"));
-				os.flush();
-				os.close();
-				socket.close();
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -37,5 +39,17 @@ public class Server {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public static boolean isStatic(String uri) {
+		boolean isStatic = false;
+		String[] suffixs = { "html", "css", "jpg", "js" };
+		for (String suffix : suffixs) {
+			if (uri.endsWith("." + suffix)) {
+				isStatic = true;
+				break;
+			}
+		}
+		return isStatic;
 	}
 }

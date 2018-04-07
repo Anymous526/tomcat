@@ -5,3 +5,7 @@
 
 /.classpath
 /.project
+/.classpath/
+
+/.project
+/target/

@@ -31,13 +31,65 @@
 			<version>1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.3</version>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/commons-daemon.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>commons-daemon</groupId>
+			<artifactId>commons-daemon</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/commons-daemon.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>commons-modeler</groupId>
+			<artifactId>commons-modeler</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/commons-modeler.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>jakarta-regexp</groupId>
+			<artifactId>jakarta-regexp</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jakarta-regexp-1.2.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>naming-common</groupId>
+			<artifactId>naming-common</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/naming-common.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>naming-factory</groupId>
+			<artifactId>naming-factory</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/naming-factory.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>servlet</groupId>
+			<artifactId>servlet</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/servlet.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>tomcat-util</groupId>
+			<artifactId>tomcat-util</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/tomcat-util.jar</systemPath>
+		</dependency>
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> <version>2.3</version> </dependency> -->
 
-	<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> <version>2.5</version> </dependency> <dependency> <groupId>javax.servlet</groupId> 
-		<artifactId>javax.servlet-api</artifactId> <version>3.0.1</version> </dependency> -->
+		<!-- <dependency> <groupId>javax.servlet</groupId> <artifactId>servlet-api</artifactId> <version>2.5</version> </dependency> <dependency> <groupId>javax.servlet</groupId> 
+			<artifactId>javax.servlet-api</artifactId> <version>3.0.1</version> </dependency> -->
 	</dependencies>
 
 	<build>
@@ -51,6 +103,25 @@
 		<filters>
 			<filter>src/main/filters/filter-${env}.properties</filter>
 		</filters>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<debug>true</debug>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 	<!-- 不同的打包环境 -->
